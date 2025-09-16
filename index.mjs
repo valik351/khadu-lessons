@@ -150,6 +150,10 @@ export const getCalendar = async () => {
             summary: 'Khnadu lesson',
             description: event["data-content"],
             url: event.link,
+            alarms: [
+                { type: 'display', trigger: 60 },    // 1 minute before
+                { type: 'display', trigger: 20 * 60 } // 20 minutes before
+            ]
         });
     }
     return calendar.toString();
