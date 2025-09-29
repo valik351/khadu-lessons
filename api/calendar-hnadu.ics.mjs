@@ -1,4 +1,4 @@
-import {getCalendar} from "../../index.mjs";
+import {getCalendar} from "../index.mjs";
 
 export default async function handler(req, res) {
     res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
