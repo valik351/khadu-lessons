@@ -141,13 +141,12 @@ export const getCalendar = async () => {
 
         const startTime = new Date(day + 'T' + event["start"] + ':00');
         const endTime = new Date(day+ 'T' + event["end"] + ':00');
-        const isLecture = event["data-content"].toLowerCase().includes('лк')
         calendar.createEvent({
             id: startTime.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
             location: "Khnadu",
             start: subHours(startTime, 3),
             end: subHours(endTime, 3),
-            summary: 'Khnadu lesson ' + isLecture ? 'Лк' : 'Пз',
+            summary: event["data-content"].toLowerCase().includes('лк') ? 'Лк' : 'Пз',
             description: event["data-content"],
             url: event.link,
             alarms: [
