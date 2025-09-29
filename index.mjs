@@ -150,8 +150,8 @@ export const getCalendar = async () => {
             description: event["data-content"],
             url: event.link,
             alarms: [
-                { type: 'display', trigger: 60 },    // 1 minute before
-                { type: 'display', trigger: 20 * 60 } // 20 minutes before
+                { type: 'display', trigger: 60, description: '1 min alarm' },    // 1 minute before
+                { type: 'display', trigger: 20 * 60, description: '20 min alarm' } // 20 minutes before
             ]
         });
     }
