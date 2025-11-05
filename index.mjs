@@ -2,7 +2,7 @@ import 'dotenv/config'
 import * as cheerio from 'cheerio';
 import ical, {ICalCalendarMethod} from "ical-generator";
 import * as http from "node:http";
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 
 const getCSRF = async () => {
