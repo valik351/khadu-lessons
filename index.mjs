@@ -2,7 +2,6 @@ import 'dotenv/config'
 import * as cheerio from 'cheerio';
 import ical, {ICalCalendarMethod} from "ical-generator";
 import * as http from "node:http";
-import {subHours} from "date-fns";
 
 const getCSRF = async () => {
     const data = await fetch("https://vuz.khadi.kharkov.ua/time-table/student", {
@@ -145,8 +144,8 @@ export const getCalendar = async () => {
         calendar.createEvent({
             id: startTime.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
             location: "Khnadu",
-            start: subHours(startTime, 3),
-            end: subHours(endTime, 3),
+            start: startTime,
+            end: endTime,
             summary: event["data-content"].toLowerCase().includes('лк') ? 'Лк' : 'Пз',
             description: event["data-content"],
             url: event.link,
