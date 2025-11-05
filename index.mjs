@@ -148,7 +148,7 @@ export const getCalendar = async () => {
         const utcEnd   = fromZonedTime(endStr, zone);
 
         calendar.createEvent({
-            id: utcStart.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
+            id: utcEnd.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
             location: "Khnadu",
             start: utcStart,
             end: utcEnd,
