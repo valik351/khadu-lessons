@@ -134,7 +134,7 @@ const getEvents = async () => {
 export const getCalendar = async () => {
     const events = await getEvents();
 
-    const calendar = ical({ name: 'khnadu lessons' });
+    const calendar = ical({ name: 'khnadu lessons', timezone: 'Europe/Kiev' });
     calendar.method(ICalCalendarMethod.PUBLISH)
     for (const event of events) {
         const day = event["data-r2"].split('.').reverse().join('-');
