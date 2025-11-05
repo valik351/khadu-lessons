@@ -2,6 +2,8 @@ import 'dotenv/config'
 import * as cheerio from 'cheerio';
 import ical, {ICalCalendarMethod} from "ical-generator";
 import * as http from "node:http";
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+
 
 const getCSRF = async () => {
     const data = await fetch("https://vuz.khadi.kharkov.ua/time-table/student", {
@@ -132,20 +134,24 @@ const getEvents = async () => {
 
 export const getCalendar = async () => {
     const events = await getEvents();
+    const zone = 'Europe/Kiev';
 
     const calendar = ical({ name: 'khnadu lessons' });
     calendar.method(ICalCalendarMethod.PUBLISH)
-    calendar.timezone('Europe/Kiev')
     for (const event of events) {
         const day = event["data-r2"].split('.').reverse().join('-');
 
-        const startTime = new Date(day + 'T' + event["start"] + ':00');
-        const endTime = new Date(day+ 'T' + event["end"] + ':00');
+        const startStr = `${day} ${event["start"] + ':00'}`;
+        const endStr =`${day} ${event["end"] + ':00'}`;
+
+        const utcStart = zonedTimeToUtc(startStr, zone);
+        const utcEnd   = zonedTimeToUtc(endStr, zone);
+
         calendar.createEvent({
-            id: startTime.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
+            id: utcStart.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
             location: "Khnadu",
-            start: startTime,
-            end: endTime,
+            start: utcStart,
+            end: utcEnd,
             summary: event["data-content"].toLowerCase().includes('лк') ? 'Лк' : 'Пз',
             description: event["data-content"],
             url: event.link,
