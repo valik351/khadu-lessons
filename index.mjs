@@ -2,7 +2,7 @@ import 'dotenv/config'
 import * as cheerio from 'cheerio';
 import ical, {ICalCalendarMethod} from "ical-generator";
 import * as http from "node:http";
-import { zonedTimeToUtc } from 'date-fns-tz';
+import { fromZonedTime } from 'date-fns-tz';
 
 
 const getCSRF = async () => {
@@ -144,8 +144,8 @@ export const getCalendar = async () => {
         const startStr = `${day} ${event["start"] + ':00'}`;
         const endStr =`${day} ${event["end"] + ':00'}`;
 
-        const utcStart = zonedTimeToUtc(startStr, zone);
-        const utcEnd   = zonedTimeToUtc(endStr, zone);
+        const utcStart = fromZonedTime(startStr, zone);
+        const utcEnd   = fromZonedTime(endStr, zone);
 
         calendar.createEvent({
             id: utcStart.toISOString().replace(/[-:.]/g,"") + "@khadu.kh",
